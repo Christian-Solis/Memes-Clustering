@@ -1,0 +1,3 @@
+I want to use Single Linkage Clustering algorithm to group clusters of a dataset of meme images. This, with the intention of suggest related memes. I think that I may achieve this by looking for images that contain mostly the same colors of a selected meme.
+
+I think this is important because when people like a meme, they try to look for more memes related to that, but its not always an easy job. Plus a suggesting tool may help not only for memes, but for suggesting similar images (if the data set is big enough).
