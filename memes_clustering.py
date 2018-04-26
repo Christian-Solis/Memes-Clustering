@@ -10,6 +10,12 @@ import heapq
 import itertools
 import sys
 import os
+import collections
+# quitar ↓
+# import nltk
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 
 # -----------------------------------------------------------------------------
 # Read the dataset file if it changes
@@ -127,6 +133,22 @@ def input_reading_1(dataset):
 # -----------------------------------------------------------------------------
 
 
+# -----------------------------------------------------------------------------
+# Word tokenizer that converts text into tokens
+# and removes stopwords
+# -----------------------------------------------------------------------------
+
+# Tokenize the text
+def word_tokenizer(text_of_meme):
+   # Tokenizes and stems the text of the meme
+   meme_tokens = word_tokenize(text_of_meme)
+   # PorterStemmer is an algorithm for removing the commoner morphological
+   # and inflexional endings from words in English.
+   stemmer = PorterStemmer()
+   # Remove the stopwords from the tokens
+   # Stop words are words that lack meaning by themselves
+   meme_tokens = [stemmer.stem(t) for t in tokens if t not in stopwords.words('english')]
+   return meme_tokens
 
 # -----------------------------------------------------------------------------
 # Main function
