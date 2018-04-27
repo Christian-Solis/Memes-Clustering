@@ -52,7 +52,7 @@ def input_reading_1(dataset):
     # date_of_meme = list()
 
     # For loop that extracts the content for each variable
-    for line in splitted_input_by_line_break[:-2]:
+    for line in splitted_input_by_line_break[:-1]:
         # Split input by tabs
         splitted_input_by_tabs = line.split('\t')
         # ID of meme implementation
@@ -73,9 +73,9 @@ def input_reading_1(dataset):
         text_of_implementation.append(text)
         # date_of_meme.append(date)
 
-    # print(text_of_implementation)
     dataset.close()
-    # return(stack_of_nodes, number_of_probabilities, probabilities, number_of_queries, queries)
+    # return(id_of_meme_implementation, id_of_meme, number_of_upvotes)
+    word_tokenizer(text_of_implementation)
 
 # -----------------------------------------------------------------------------
 # Parsing and cleaning process of first dataset
@@ -114,9 +114,8 @@ def input_reading_2(dataset):
         meme_name.append(name)
         url_of_meme.append(url)
 
-    print(url_of_meme)
     dataset.close()
-    # return(stack_of_nodes, number_of_probabilities, probabilities, number_of_queries, queries)
+    # return(id_of_meme, url_slug_of_meme, meme_name, url_of_meme)
 
 # -----------------------------------------------------------------------------
 # Word tokenizer that converts text into tokens
@@ -125,15 +124,17 @@ def input_reading_2(dataset):
 
 # Tokenize the text
 def word_tokenizer(text_of_meme):
-   # Tokenizes and stems the text of the meme
-   meme_tokens = word_tokenize(text_of_meme)
-   # PorterStemmer is an algorithm for removing the commoner morphological
-   # and inflexional endings from words in English.
-   stemmer = PorterStemmer()
-   # Remove the stopwords from the tokens
-   # Stop words are words that lack meaning by themselves
-   meme_tokens = [stemmer.stem(t) for t in tokens if t not in stopwords.words('english')]
-   return meme_tokens
+
+    for each_meme in text_of_meme:
+        # Tokenizes and stems the text of the meme
+        meme_tokens = word_tokenize(each_meme)
+        # PorterStemmer is an algorithm for removing the commoner morphological
+        # and inflexional endings from words in English.
+        stemmer = PorterStemmer()
+        # Remove the stopwords from the tokens
+        # Stop words are words that lack meaning by themselves
+        meme_tokens = [stemmer.stem(t) for t in meme_tokens if t not in stopwords.words('english')]
+        # print(meme_tokens)
 
 # -----------------------------------------------------------------------------
 # Main function
