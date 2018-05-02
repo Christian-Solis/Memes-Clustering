@@ -57,7 +57,7 @@ def input_reading_1(dataset):
     # date_of_meme = list()
 
     # Number of clusters
-    number_of_clusters = 75
+    number_of_clusters = 7
 
     # For loop that extracts the content for each variable
     for line in splitted_input_by_line_break[:-1]:
@@ -71,6 +71,7 @@ def input_reading_1(dataset):
         upvotes = splitted_input_by_tabs[2]
         # Text of meme implementation
         text = splitted_input_by_tabs[3]
+
         # Date of meme
         # date = splitted_input_by_tabs[4]
 
@@ -108,7 +109,7 @@ def input_reading_2(dataset):
     url_of_meme = list()
 
     # For loop that extracts the content for each variable
-    for line in splitted_input_by_line_break[:-1]:
+    for line in splitted_input_by_line_break[:-2]:
         # Split input by tabs
         splitted_input_by_tabs = line.split('\t')
         # ID of meme
@@ -193,7 +194,7 @@ def cluster_memes(text_of_implementation, number_of_clusters):
     # Loop to print number of cluster and nodes of the clusters
     # Iterate n times the number of clusters
     for cluster in range(number_of_clusters):
-        print ("Cluster ",cluster,":")
+        print ("\n","Cluster ",cluster,":")
         # Enumerate the nodes in the cluster
         for i,meme in enumerate(meme_clusters[cluster]):
             print ("→ Meme ",i,": ",text_of_implementation[meme])
@@ -214,7 +215,7 @@ def main():
     # Specify the file directory to separate datasets from main program
     file_dir = os.path.dirname(os.path.realpath('__file__'))
     # Accessing the file in the folder contained in the current folder
-    data_set_1 = os.path.join(file_dir, 'datasets/dataset_5000.in')
+    data_set_1 = os.path.join(file_dir, 'datasets/own_dataset.in')
     data_set_2 = os.path.join(file_dir, 'datasets/memes_dataset_2.in')
     read_file_1(data_set_1)
     read_file_2(data_set_2)
