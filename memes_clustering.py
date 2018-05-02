@@ -49,13 +49,15 @@ def input_reading_1(dataset):
     splitted_input_by_line_break = dataset_read.split('\n')
     # list of variables
     id_of_meme_implementation = list()
-    id_of_meme = list()
+    id_of_meme_list = list()
     number_of_upvotes = list()
     text_of_implementation = list()
+
+    id_of_meme_set = set()
     # date_of_meme = list()
 
     # Number of clusters
-    number_of_clusters = 4
+    number_of_clusters = 75
 
     # For loop that extracts the content for each variable
     for line in splitted_input_by_line_break[:-1]:
@@ -74,10 +76,13 @@ def input_reading_1(dataset):
 
         # Append content to corresponding lists
         id_of_meme_implementation.append(id)
-        id_of_meme.append(id_meme)
+        id_of_meme_list.append(id_meme)
+        id_of_meme_set.add(id_meme)
         number_of_upvotes.append(upvotes)
         text_of_implementation.append(text)
         # date_of_meme.append(date)
+
+    # print(len(id_of_meme_set))
 
     dataset.close()
     # return(id_of_meme_implementation, id_of_meme, number_of_upvotes)
@@ -191,8 +196,13 @@ def cluster_memes(text_of_implementation, number_of_clusters):
         print ("Cluster ",cluster,":")
         # Enumerate the nodes in the cluster
         for i,meme in enumerate(meme_clusters[cluster]):
-            print ("\Meme ",i,": ",text_of_implementation[meme])
+            print ("→ Meme ",i,": ",text_of_implementation[meme])
 
+
+    # Recommender
+
+    # for texto en text_of_implementation
+        # if meme == texto[3]
 
     # return dict(meme_clusters)
 
@@ -204,7 +214,7 @@ def main():
     # Specify the file directory to separate datasets from main program
     file_dir = os.path.dirname(os.path.realpath('__file__'))
     # Accessing the file in the folder contained in the current folder
-    data_set_1 = os.path.join(file_dir, 'datasets/memes_dataset.in')
+    data_set_1 = os.path.join(file_dir, 'datasets/dataset_5000.in')
     data_set_2 = os.path.join(file_dir, 'datasets/memes_dataset_2.in')
     read_file_1(data_set_1)
     read_file_2(data_set_2)
