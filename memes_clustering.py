@@ -88,7 +88,10 @@ def input_reading_1(dataset):
     dataset.close()
     # return(id_of_meme_implementation, id_of_meme, number_of_upvotes)
     # word_tokenizer(text_of_implementation)
-    cluster_memes(text_of_implementation, number_of_clusters)
+    #print(len(text_of_implementation))
+    from random import shuffle
+    shuffle(text_of_implementation)
+    cluster_memes(text_of_implementation[:10000], number_of_clusters)
 
 # -----------------------------------------------------------------------------
 # Parsing and cleaning process of first dataset
@@ -138,13 +141,14 @@ def input_reading_2(dataset):
 # Tokenize the text
 def word_tokenizer(text_of_meme):
     # Tokenizes and stems the text of the meme
-    meme_tokens = word_tokenize(text_of_meme)
+    #meme_tokens = word_tokenize(text_of_meme)
+    meme_tokens = list(text_of_meme.split(' '))
     # PorterStemmer is an algorithm for removing the commoner morphological
     # and inflexional endings from words in English.
-    stemmer = PorterStemmer()
+    #stemmer = PorterStemmer()
     # Remove the stopwords from the tokens
     # Stop words are words that lack meaning by themselves
-    meme_tokens = [stemmer.stem(t) for t in meme_tokens if t not in stopwords.words('english')]
+    #meme_tokens = [stemmer.stem(t) for t in meme_tokens if t not in stopwords.words('english')]
     return meme_tokens
 
 # -----------------------------------------------------------------------------
@@ -154,7 +158,7 @@ def word_tokenizer(text_of_meme):
 # times a word appears in the document
 # KMeans usage, assumes that we know the number of clusters,
 # then it clusters randomly the n clusters (centroids),
-# and the distance between each node and the centroid with euclidian distance
+# and the distance between each node and= list(text_of_meme.split(' ')) the centroid with euclidian distance
 # (Pitagoras Theorem = dist((x, y), (a, b)) = √(x - a)² + (y - b)²).
 # Then each node its grouped with its nearest centroid.
 # Finally, new centroids are calculated and the process repeates again.
@@ -162,7 +166,7 @@ def word_tokenizer(text_of_meme):
 # -----------------------------------------------------------------------------
 
 # Cluster the memes
-def cluster_memes(text_of_implementation, number_of_clusters):
+def cluster_memes(text_of_implementation, number_of_clusters, text_unseen = None):
     # TfidfVectorizer converts a collection of documents
     # into a matrix of TF-IDF features
     # Term Frequency–inverse Document Frequency
@@ -170,8 +174,6 @@ def cluster_memes(text_of_implementation, number_of_clusters):
     # and converstion to lowercase
     vectorizer = TfidfVectorizer(tokenizer=word_tokenizer,
                                 stop_words=stopwords.words('english'),
-                                max_df=0.9,
-                                min_df=0.1,
                                 lowercase=True)
     # Builds a tf-idf matrix for the memes
     # Transforms meme tokens into matrix
@@ -183,6 +185,9 @@ def cluster_memes(text_of_implementation, number_of_clusters):
     k_means = KMeans(n_clusters=number_of_clusters)
     # Compute KMeans clustering
     k_means.fit(tfidf_matrix)
+
+    # unseen_tfidf = vectorizer.transform(unseen)
+    # labels_unseen = k_means.predict(unseen_tfidf)
     # Dictionary of clusters
     meme_clusters = collections.defaultdict(list)
 
